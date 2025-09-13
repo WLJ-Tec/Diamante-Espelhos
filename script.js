@@ -96,3 +96,23 @@ const nav = document.querySelector('.navbar');
 menu_btn.addEventListener('click', () => {
     nav.classList.toggle('active');
 });
+
+//btn-cards
+const projects = document.querySelectorAll('.services-grid-img');
+const sidebar = document.querySelector('.services-grid-img');
+const cards = document.querySelectorAll('.img-card');
+const nxtBtn = document.querySelectorAll('.nxt-btn');
+const preBtn = document.querySelectorAll('.pre-btn');
+
+projects.forEach((item, i) => {
+    let containerDimencao = item.getBoundingClientRect();
+    let containerWidth = containerDimencao.width;
+
+    nxtBtn[i].addEventListener('click', () => {
+        item.scrollLeft += containerWidth;
+    })
+
+    preBtn[i].addEventListener('click', () => {
+        item.scrollLeft -= containerWidth;
+    })
+})

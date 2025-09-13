@@ -98,21 +98,60 @@ menu_btn.addEventListener('click', () => {
 });
 
 //btn-cards
-const projects = document.querySelectorAll('.services-grid-img');
-const sidebar = document.querySelector('.services-grid-img');
-const cards = document.querySelectorAll('.img-card');
-const nxtBtn = document.querySelectorAll('.nxt-btn');
-const preBtn = document.querySelectorAll('.pre-btn');
+const carousels = document.querySelectorAll('.services-grid-img');
+const nextBtns = document.querySelectorAll('.nxt-btn');
+const prevBtns = document.querySelectorAll('.pre-btn');
 
-projects.forEach((item, i) => {
-    let containerDimencao = item.getBoundingClientRect();
-    let containerWidth = containerDimencao.width;
+carousels.forEach((carousel, i) => {
+    const next = nextBtns[i];
+    const prev = prevBtns[i];
 
-    nxtBtn[i].addEventListener('click', () => {
-        item.scrollLeft += containerWidth;
-    })
+    if (!next || !prev) return; // proteção caso falte botão
 
-    preBtn[i].addEventListener('click', () => {
-        item.scrollLeft -= containerWidth;
-    })
-})
+    const getContainerWidth = () => carousel.getBoundingClientRect().width;
+
+    // botões já existentes (comportamento original)
+    next.addEventListener('click', () => {
+        carousel.scrollBy({ left: getContainerWidth(), behavior: 'smooth' });
+    });
+
+    prev.addEventListener('click', () => {
+        carousel.scrollBy({ left: -getContainerWidth(), behavior: 'smooth' });
+    });
+
+    // autoplay: simula clique no "next" a cada X ms
+    let intervalMs = 5000;
+    let autoplayId = null;
+
+    function startAutoplay() {
+        stopAutoplay(); // evita duplicar intervalos
+        autoplayId = setInterval(() => {
+            // se já no final, volta para o início
+            if (carousel.scrollLeft + getContainerWidth() >= carousel.scrollWidth - 1) {
+                carousel.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                carousel.scrollBy({ left: getContainerWidth(), behavior: 'smooth' });
+            }
+        }, intervalMs);
+    }
+
+    function stopAutoplay() {
+        if (autoplayId) {
+            clearInterval(autoplayId);
+            autoplayId = null;
+        }
+    }
+
+    // pausa ao passar o mouse / focar (opcional, bom pra UX)
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
+    carousel.addEventListener('focusin', stopAutoplay);
+    carousel.addEventListener('focusout', startAutoplay);
+
+    // reinicia autoplay após carregamento / redimensionamento (recalcula largura)
+    window.addEventListener('resize', () => {
+        // opcional: snap ou recalculo adicional
+    });
+
+    startAutoplay();
+});

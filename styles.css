@@ -505,6 +505,7 @@ img {
 
     .list {
         padding-left: 0px;
+        display: contents;
     }
 
     .nav-menu {
@@ -513,6 +514,11 @@ img {
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
+    }
+
+    .nav-menu a {
+        font-size: 16px;
+        margin-left: 0px;
     }
 
     .nav-brand:hover {

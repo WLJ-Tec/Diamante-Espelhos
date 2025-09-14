@@ -334,6 +334,7 @@ img {
     gap: 30px;
     margin: 0 auto;
     padding: 50px 20px;
+    scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
 }
 
@@ -348,6 +349,7 @@ img {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(14px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    scroll-snap-align: center;
     border-radius: 20px;
     padding: 40px;
     width: auto;
@@ -541,6 +543,7 @@ img {
         align-items: center;
         width: 100%;
         display: -webkit-box;
+        scroll-snap-type: x mandatory;
         scrollbar-width: none;
         overflow-x: auto;
         gap: 30px;

@@ -583,6 +583,11 @@ img {
         align-items: center;
     }
 
+    .container img {
+        width: 20rem;
+        height: auto;
+    }
+
     .footer {
         font-size: 12px;
     }
